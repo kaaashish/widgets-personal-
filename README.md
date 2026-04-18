@@ -12,6 +12,6 @@ to run any of these you'll need:
 - [Node.js](https://nodejs.org) installed on your computer
 - then inside the widget folder, run: npm install and npm run start
 
-- ### cinnamon-widget
+### cinnamon-widget
 a long taskbar-style widget with a live clock, day progress XP bar, and cinnamoroll trotting across the screen 🩵
 
