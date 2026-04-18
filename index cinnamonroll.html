@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        margin: 0;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100vh;
+        overflow: hidden;
+        font-family: 'Press Start 2P', monospace;
+        -webkit-app-region: drag;
+        padding: 0 8px;
+      }
+
+      .widget {
+        width: 100%;
+        background: #fff0f5;
+        border: 3px solid #a8d8ea;
+        box-shadow: 4px 4px 0 #ffb6c1, 8px 8px 0 #a8d8ea;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 6px 10px;
+        position: relative;
+        overflow: hidden;
+        -webkit-app-region: drag;
+      }
+
+      .scene {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+        -webkit-app-region: no-drag;
+      }
+
+      .cinnamoroll {
+        position: absolute;
+        bottom: 4px;
+        width: 50px;
+        height: 50px;
+        image-rendering: pixelated;
+        animation: trot 14s linear infinite;
+      }
+
+      @keyframes trot {
+        0%   { left: -60px; }
+        100% { left: 110%; }
+      }
+
+      .middle {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        -webkit-app-region: no-drag;
+        z-index: 1;
+      }
+
+      .time-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .time {
+        color: #ff6b8a;
+        font-size: 10px;
+        text-shadow: 1px 1px #ffb6c1;
+      }
+
+      .day-label {
+        color: #a8d8ea;
+        font-size: 6px;
+      }
+
+      .xp-label {
+        color: #ff6b8a;
+        font-size: 6px;
+        margin-bottom: 1px;
+      }
+
+      .xp-bar-container {
+        width: 100%;
+        height: 10px;
+        background: #ffd6e0;
+        border: 2px solid #ff6b8a;
+        image-rendering: pixelated;
+      }
+
+      .xp-bar {
+        height: 100%;
+        background: repeating-linear-gradient(
+          90deg,
+          #ff6b8a 0px,
+          #ff6b8a 6px,
+          #ffb6c1 6px,
+          #ffb6c1 8px
+        );
+        transition: width 1s linear;
+      }
+
+      .buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 4px;
+        -webkit-app-region: no-drag;
+        flex-shrink: 0;
+        z-index: 1;
+      }
+
+      .btn {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #a8d8ea;
+        background: #fff0f5;
+        cursor: pointer;
+        font-size: 7px;
+        color: #ff6b8a;
+        font-family: 'Press Start 2P', monospace;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+      }
+
+      .btn:hover { background: #a8d8ea; color: #fff; }
+    </style>
+  </head>
+  <body>
+    <div class="widget">
+      <div class="scene">
+        <img class="cinnamoroll" src="cinnamonroll.gif" />
+      </div>
+      <div class="middle">
+        <div class="time-row">
+          <span class="time" id="clock">00:00:00</span>
+          <span class="day-label" id="dayLabel">loading...</span>
+        </div>
+        <div class="xp-label" id="xpLabel">day progress: 0%</div>
+        <div class="xp-bar-container">
+          <div class="xp-bar" id="xpBar" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="btn" onclick="window.electronAPI.minimize()">_</button>
+        <button class="btn" onclick="window.electronAPI.close()">x</button>
+      </div>
+    </div>
+
+    <script>
+      const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+
+      function update() {
+        const now = new Date()
+        const h = String(now.getHours()).padStart(2, '0')
+        const m = String(now.getMinutes()).padStart(2, '0')
+        const s = String(now.getSeconds()).padStart(2, '0')
+        document.getElementById('clock').textContent = `${h}:${m}:${s}`
+        document.getElementById('dayLabel').textContent = days[now.getDay()]
+
+        const secondsInDay = 24 * 60 * 60
+        const secondsPassed = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()
+        const percent = Math.floor((secondsPassed / secondsInDay) * 100)
+        document.getElementById('xpBar').style.width = `${percent}%`
+        document.getElementById('xpLabel').textContent = `day progress: ${percent}%`
+      }
+
+      update()
+      setInterval(update, 1000)
+    </script>
+  </body>
+</html>
