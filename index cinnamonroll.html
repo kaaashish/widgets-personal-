@@ -2,182 +2,266 @@
 <html>
   <head>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Press+Start+2P&display=swap');
 
       * { box-sizing: border-box; margin: 0; padding: 0; }
 
       body {
-        margin: 0;
-        background: transparent;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 100vh;
-        overflow: hidden;
-        font-family: 'Press Start 2P', monospace;
-        -webkit-app-region: drag;
-        padding: 0 8px;
-      }
-
-      .widget {
-        width: 100%;
-        background: #fff0f5;
-        border: 3px solid #a8d8ea;
-        box-shadow: 4px 4px 0 #ffb6c1, 8px 8px 0 #a8d8ea;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 6px 10px;
-        position: relative;
-        overflow: hidden;
-        -webkit-app-region: drag;
-      }
-
-      .scene {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        overflow: hidden;
-        -webkit-app-region: no-drag;
-      }
-
-      .cinnamoroll {
-        position: absolute;
-        bottom: 4px;
-        width: 50px;
-        height: 50px;
-        image-rendering: pixelated;
-        animation: trot 14s linear infinite;
-      }
-
-      @keyframes trot {
-        0%   { left: -60px; }
-        100% { left: 110%; }
-      }
-
-      .middle {
-        flex: 1;
+        background: #f0e8d0;
+       font-family: 'Dancing Script', cursive;
         display: flex;
         flex-direction: column;
-        gap: 4px;
-        -webkit-app-region: no-drag;
-        z-index: 1;
-      }
+        height: 100vh;
+        overflow: hidden;
+        border: 3px solid #e8b4c8;
+        border-radius: 16px;
+        box-shadow: 0 0 0 3px #f5d0e0, 0 8px 24px rgba(232, 180, 200, 0.3);  
 
-      .time-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
       }
+    .titlebar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 14px;
+      background-image: url('deerfur.jpg');
+      background-size: cover;
+      background-position: center;
+      border-radius: 13px 13px 0 0;
+      -webkit-app-region: drag;
+      flex-shrink: 0;
+  }
 
-      .time {
-        color: #ff6b8a;
-        font-size: 10px;
-        text-shadow: 1px 1px #ffb6c1;
-      }
-
-      .day-label {
-        color: #a8d8ea;
-        font-size: 6px;
-      }
-
-      .xp-label {
-        color: #ff6b8a;
-        font-size: 6px;
-        margin-bottom: 1px;
-      }
-
-      .xp-bar-container {
-        width: 100%;
-        height: 10px;
-        background: #ffd6e0;
-        border: 2px solid #ff6b8a;
-        image-rendering: pixelated;
-      }
-
-      .xp-bar {
-        height: 100%;
-        background: repeating-linear-gradient(
-          90deg,
-          #ff6b8a 0px,
-          #ff6b8a 6px,
-          #ffb6c1 6px,
-          #ffb6c1 8px
-        );
-        transition: width 1s linear;
-      }
+      .title { color: #fff8f5; font-size: 20px; text-shadow: 1px 1px #b8806e; }
 
       .buttons {
         display: flex;
-        flex-direction: row;
-        gap: 4px;
+        gap: 5px;
         -webkit-app-region: no-drag;
-        flex-shrink: 0;
-        z-index: 1;
       }
 
       .btn {
-        width: 18px;
-        height: 18px;
-        border: 2px solid #a8d8ea;
-        background: #fff0f5;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        border: none;
         cursor: pointer;
-        font-size: 7px;
-        color: #ff6b8a;
-        font-family: 'Press Start 2P', monospace;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
       }
 
-      .btn:hover { background: #a8d8ea; color: #fff; }
+      .close { background: #c87060; }
+      .minimise { background: #a0885f; }
+      .btn:hover { opacity: 0.7; }
+
+      .img-area {
+        display: flex;
+        justify-content: center;
+        padding: 10px 0 4px;
+        flex-shrink: 0;
+      }
+
+      .deer-img {
+        height: 80px;
+        width: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 2px solid #e8c4b8;
+        image-rendering: pixelated;
+        transition: opacity 0.3s;
+      }
+
+      .display {
+        text-align: center;
+        padding: 12px;
+        flex-shrink: 0;
+      }
+
+      .time-display {
+        font-family: 'Press Start 2P', monospace;
+        font-size: 28px;
+        color: #b8806e;
+        font-size: 28px;
+        text-shadow: 2px 2px #f0d0c0;
+        letter-spacing: 2px;
+      }
+
+     .time-display.urgent { 
+        color: #ff6b8a; 
+        font-family: 'Press Start 2P', monospace;
+        animation: blink 0.5s step-end infinite; 
+        }
+      @keyframes blink {
+        50% { opacity: 0.3; }
+      }
+
+      .set-label {
+        color: #e8b4c8;
+        font-size: 16px;
+        text-align: center;
+        padding-bottom: 6px;
+      }
+
+      .set-area {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        padding: 0 14px 8px;
+        flex-shrink: 0;
+      }
+
+      .set-area input {
+        width: 60px;
+        background: #fff8fb;
+        border: 2px solid #e8b4c8;
+        padding: 5px;
+        font-family: 'Press Start 2P', monospace;
+        font-size: 8px;
+        color: #7a4a5a;
+        outline: none;
+        text-align: center;
+      }
+
+      .set-area input:focus { border-color: #b8806e; }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        padding: 8px 14px 10px;
+        flex-shrink: 0;
+      }
+
+      .ctrl-btn {
+        background: #f5d0e0;
+        border: 2px solid #e8b4c8;
+        padding: 6px 12px;
+        color: #7a4a5a;
+        font-family: 'Press Start 2P', monospace;
+        font-size: 8px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+        .ctrl-btn:hover { background: #e8b4c8; color: #fff8f5; }
+
+        .ctrl-btn.dark { background: #e8b4c8; border-color: #c890a8; color: #fff8f5; }
+        .ctrl-btn.dark:hover { background: #c890a8; }
+
+      .status {
+        text-align: center;
+        color: #e8b4c8;
+        font-size: 16px;
+        padding-bottom: 10px;
+      }
     </style>
   </head>
   <body>
-    <div class="widget">
-      <div class="scene">
-        <img class="cinnamoroll" src="[ add own gif ] " />
-      </div>
-      <div class="middle">
-        <div class="time-row">
-          <span class="time" id="clock">00:00:00</span>
-          <span class="day-label" id="dayLabel">loading...</span>
-        </div>
-        <div class="xp-label" id="xpLabel">day progress: 0%</div>
-        <div class="xp-bar-container">
-          <div class="xp-bar" id="xpBar" style="width: 0%"></div>
-        </div>
-      </div>
+    <div class="titlebar">
+      <span class="title">🦌</span>
       <div class="buttons">
-        <button class="btn" onclick="window.electronAPI.minimize()">_</button>
-        <button class="btn" onclick="window.electronAPI.close()">x</button>
+        <button class="btn minimise" onclick="window.electronAPI.minimize()"></button>
+        <button class="btn close" onclick="window.electronAPI.close()"></button>
       </div>
     </div>
 
+    <div class="img-area">
+      <img class="deer-img" id="deerImg" src="deer butterfly.webp" />
+    </div>
+
+    <div class="display">
+      <div class="time-display" id="timeDisplay">00:00</div>
+    </div>
+
+    <div class="set-label">set timer</div>
+    <div class="set-area">
+      <input type="number" id="setMins" min="0" max="99" placeholder="mm" value="25" />
+      <input type="number" id="setSecs" min="0" max="59" placeholder="ss" value="00" />
+    </div>
+
+    <div class="controls">
+      <button class="ctrl-btn dark" onclick="setTimer()">set</button>
+      <button class="ctrl-btn" onclick="startStop()" id="startBtn">start</button>
+      <button class="ctrl-btn dark" onclick="resetTimer()">reset</button>
+    </div>
+
+    <div class="status" id="status">stay locked in girlie 🦌</div>
+
     <script>
-      const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+      let totalSeconds = 25 * 60
+      let remaining = totalSeconds
+      let running = false
+      let interval = null
+      let imgTimeout = null
 
-      function update() {
-        const now = new Date()
-        const h = String(now.getHours()).padStart(2, '0')
-        const m = String(now.getMinutes()).padStart(2, '0')
-        const s = String(now.getSeconds()).padStart(2, '0')
-        document.getElementById('clock').textContent = `${h}:${m}:${s}`
-        document.getElementById('dayLabel').textContent = days[now.getDay()]
-
-        const secondsInDay = 24 * 60 * 60
-        const secondsPassed = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()
-        const percent = Math.floor((secondsPassed / secondsInDay) * 100)
-        document.getElementById('xpBar').style.width = `${percent}%`
-        document.getElementById('xpLabel').textContent = `day progress: ${percent}%`
+    function setImg(src, permanent = false) {
+        document.getElementById('deerImg').src = src
+        if (imgTimeout) clearTimeout(imgTimeout)
+        if (!permanent && src !== 'deer butterfly.webp') {
+          imgTimeout = setTimeout(() => {
+            document.getElementById('deerImg').src = 'deer butterfly.webp'
+          }, 2500)
+        }
+}
+      function format(secs) {
+        const m = String(Math.floor(secs / 60)).padStart(2, '0')
+        const s = String(secs % 60).padStart(2, '0')
+        return `${m}:${s}`
       }
 
-      update()
-      setInterval(update, 1000)
+      function updateDisplay() {
+        const el = document.getElementById('timeDisplay')
+        el.textContent = format(remaining)
+        el.classList.toggle('urgent', remaining <= 10 && running)
+      }
+
+      function setTimer() {
+        const mins = parseInt(document.getElementById('setMins').value) || 0
+        const secs = parseInt(document.getElementById('setSecs').value) || 0
+        totalSeconds = mins * 60 + secs
+        remaining = totalSeconds
+        running = false
+        clearInterval(interval)
+        document.getElementById('startBtn').textContent = 'start'
+        document.getElementById('status').textContent = 'timer set! 🦌'
+        setImg('deer walk.webp')
+        updateDisplay()
+      }
+
+      function startStop() {
+      if (running) {
+        running = false
+        clearInterval(interval)
+        document.getElementById('startBtn').textContent = 'start'
+        document.getElementById('status').textContent = 'paused 🦌'
+        setImg('deer butterfly.webp')
+      } else {
+        if (remaining === 0) return
+        running = true
+        document.getElementById('startBtn').textContent = 'pause'
+        document.getElementById('status').textContent = 'locked in 🦌'
+        setImg('locked_in.jpg', true)
+        interval = setInterval(() => {
+          remaining--
+          updateDisplay()
+          if (remaining <= 0) {
+            clearInterval(interval)
+            running = false
+            document.getElementById('startBtn').textContent = 'start'
+            document.getElementById('status').textContent = 'done!! great work 🦌'
+            setImg('new_task.jpg')
+          }
+        }, 1000)
+      }
+    }
+      function resetTimer() {
+        clearInterval(interval)
+        running = false
+        remaining = totalSeconds
+        document.getElementById('startBtn').textContent = 'start'
+        document.getElementById('status').textContent = 'reset! 🦌'
+        setImg('deer sneeze.webp')
+        updateDisplay()
+      }
+
+      updateDisplay()
     </script>
   </body>
 </html>
